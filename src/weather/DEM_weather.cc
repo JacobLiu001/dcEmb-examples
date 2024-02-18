@@ -38,7 +38,7 @@ int run_weather_test() {
 
   // This particular example has many free variables to fit, and will require
   // more than the default 128 iterations
-  model.max_invert_it = 16;
+  model.max_invert_it = 256;
 
   // Turn on outputting intermediate calculations from dcEmb, and set filenames.
   // We'll use these to make graphs later.
@@ -87,10 +87,11 @@ int run_weather_test() {
   // Define prior expectations for parameters. In this example, we set the
   // parameters as a mix of global parameters, and CO2 FFI emissions between
   // 2000 and 2100
+  // Div by 1000 to convert to standard units
   std::vector<Eigen::MatrixXd> ecf_prior =
       simple_ecf(model.species_list, "ssp126", start_date, end_date);
   model.prior_parameter_expectations = default_prior_expectations(
-      ecf_prior.at(0)(0, Eigen::seq(250, Eigen::last)));
+      ecf_prior.at(0)(0, Eigen::seq(250, Eigen::last)) / 1000);
 
   // Set other parameter and hyperparameter expectations/covariances to
   // default values
@@ -147,7 +148,7 @@ int run_weather_test() {
   // Open files recording intermediate parameter expectaions and covariances
   // from each iteration of the DCM model inversion
   std::ifstream param_expectations_file;
-  param_expectations_file.open("param_expecations.csv");
+  param_expectations_file.open("param_expectations.csv");
   std::string param_expectations_line;
   std::ifstream param_covariances_file;
   param_covariances_file.open("param_covariances.csv");
