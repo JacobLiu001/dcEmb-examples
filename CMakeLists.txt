@@ -26,7 +26,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(OpenMP)
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
-find_package(dcEmb)
+# find_package(dcEmb)
+set(dcEmb_DIR ${CMAKE_SOURCE_DIR}/dcEmb-library/)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
@@ -34,6 +35,11 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include/3body
     ${CMAKE_SOURCE_DIR}/include/weather
     ${CMAKE_SOURCE_DIR}/include/tests
+    ${dcEmb_DIR}/include
+)
+
+link_directories(
+    ${dcEmb_DIR}/lib
 )
 
 set(SOURCES_COVID

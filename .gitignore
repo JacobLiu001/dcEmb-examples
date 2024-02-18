@@ -9,3 +9,4 @@ docs/*
 !docs/source
 visualisation/*.csv
 visualisation/*.mp4
+dcEmb-library/
