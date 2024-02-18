@@ -134,6 +134,8 @@ set_target_properties(dcm_3body PROPERTIES COMPILE_FLAGS "")
 
 # Weather model
 add_executable(dcm_weather ${SOURCES_WEATHER})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/run_all_climate_scenarios.sh
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 if(OpenMP_FOUND)
     target_link_libraries(dcm_weather PUBLIC OpenMP::OpenMP_CXX)

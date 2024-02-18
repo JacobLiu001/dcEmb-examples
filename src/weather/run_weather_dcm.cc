@@ -14,12 +14,33 @@
 #include <DEM_weather.hh>
 #include <Eigen/Eigen>
 #include <iostream>
+#include <fstream>
 #include <run_weather_dcm.hh>
 
 /**
  * Check number of threads Eigen is operating on, then run weather test
  */
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " <scenario> <true_prior_expectations_filename>" << '\n';
+    std::cerr << "Where <true_prior_expectations_filename> contains 11 space-separated numbers." << '\n';
+    exit(1);
+  }
+  std::string scenario = argv[1];
+  std::string true_prior_expectations_filename = argv[2];
+
+  std::ifstream true_prior_expectations_file(true_prior_expectations_filename);
+  if (!true_prior_expectations_file.is_open()) {
+    std::cerr << "Error: could not open file " << true_prior_expectations_filename << '\n';
+    exit(1);
+  }
+  std::vector<double> true_prior_expectations;
+
+  for (int i = 0; i < 11; i++) {
+    double expectation;
+    true_prior_expectations_file >> expectation;
+    true_prior_expectations.push_back(expectation);
+  }
 #if defined(_OPENMP)
   std::cout << "OpenMP multithreading enabled with " << Eigen::nbThreads()
             << " cores" << '\n';
@@ -27,7 +48,6 @@ int main() {
   std::cout << "OpenMP multithreading not enabled, using " << Eigen::nbThreads()
             << " cores" << '\n';
 #endif
-  int test = run_weather_test();
-  exit(2);
-  return (0);
+  int test = run_weather_test(scenario, true_prior_expectations);
+  return 0;
 }

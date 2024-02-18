@@ -27,7 +27,9 @@
 /**
  * Run the weather example
  */
-int run_weather_test() {
+int run_weather_test(
+    const std::string &scenario,
+    const std::vector<double> &user_specified_true_prior_expectations) {
   dynamic_weather_model model;
 
   // Set the dates between which we want to pull weather data
@@ -43,10 +45,10 @@ int run_weather_test() {
   // Turn on outputting intermediate calculations from dcEmb, and set filenames.
   // We'll use these to make graphs later.
   model.intermediate_outputs_to_file = 1;
-  // model.intermediate_expectations_filename =
-  //     "param_expectations.csv";
-  // model.intermediate_covariances_filename =
-  //     "param_covariances.csv";
+  model.intermediate_expectations_filename =
+      "data/climate/" + scenario + "/param_expectations.csv";
+  model.intermediate_covariances_filename =
+      "data/climate/" + scenario + "/param_covariances.csv";
 
   // Define which species of gasses will drive our model, and populate the
   // properties of these gasses with default values from a config file.
@@ -57,7 +59,7 @@ int run_weather_test() {
   // Define the Emissions, Concentrations and Forcings for the ground truth,
   // based on the ssp585 scenario, a high emissions scenario
   std::vector<Eigen::MatrixXd> ecf =
-      simple_ecf(model.species_list, "ssp585", start_date, end_date);
+      simple_ecf(model.species_list, scenario, start_date, end_date);
 
   // Set model emissions
   model.emissions = ecf.at(0);
@@ -109,7 +111,8 @@ int run_weather_test() {
 
   // Create ground truth climate model from known values for all parameters
   Eigen::MatrixXd true_out = model.eval_generative(
-      true_prior_expectations(model.emissions(0, Eigen::seq(250, Eigen::last))),
+      true_prior_expectations(model.emissions(0, Eigen::seq(250, Eigen::last)),
+                              user_specified_true_prior_expectations),
       default_parameter_locations(), sz);
   model.response_vars = true_out(Eigen::all, model.select_response_vars);
 
@@ -148,10 +151,12 @@ int run_weather_test() {
   // Open files recording intermediate parameter expectaions and covariances
   // from each iteration of the DCM model inversion
   std::ifstream param_expectations_file;
-  param_expectations_file.open("param_expectations.csv");
+  param_expectations_file.open("data/climate/" + scenario +
+                               "/param_expectations.csv");
   std::string param_expectations_line;
   std::ifstream param_covariances_file;
-  param_covariances_file.open("param_covariances.csv");
+  param_covariances_file.open("data/climate/" + scenario +
+                              "/param_covariances.csv");
   std::string param_covariances_line;
 
   // Record the output of our climate model based on our posterior expectations,
@@ -208,15 +213,15 @@ int run_weather_test() {
   param_covariances_file.close();
 
   // Output recorded values to folder containing visualization python scripts
-  utility::print_matrix("../visualisation/weather/true_generative.csv",
+  utility::print_matrix("data/climate/" + scenario + "/true_generative.csv",
                         true_out);
-  utility::print_matrix("../visualisation/weather/prior_generative.csv",
+  utility::print_matrix("data/climate/" + scenario + "/prior_generative.csv",
                         prior_e_out);
-  utility::print_matrix("../visualisation/weather/prior_generative_rand.csv",
+  utility::print_matrix("data/climate/" + scenario + "/prior_generative_rand.csv",
                         prior_rand_out);
-  utility::print_matrix("../visualisation/weather/pos_generative.csv",
+  utility::print_matrix("data/climate/" + scenario + "/pos_generative.csv",
                         posterior_e_out);
-  utility::print_matrix("../visualisation/weather/pos_generative_rand.csv",
+  utility::print_matrix("data/climate/" + scenario + "/pos_generative_rand.csv",
                         posterior_rand_out);
   return 0;
 }
@@ -482,10 +487,15 @@ species_struct simple_species_struct(
  * Some sensible "true" values for model parameters, plus CO2 FFI true values
  * as additional parameters
  */
-Eigen::VectorXd true_prior_expectations(Eigen::VectorXd em) {
+Eigen::VectorXd true_prior_expectations(Eigen::VectorXd em,
+                                        const std::vector<double> &user_specified) {
   Eigen::VectorXd default_prior_expectation = Eigen::VectorXd::Zero(11);
-  default_prior_expectation << 1.876, 5.154, 0.6435, 2.632, 9.262, 52.93, 1.285,
-      2.691, 0.4395, 28.24, 8;
+  // default_prior_expectation << 1.876, 5.154,
+  // 0.6435, 2.632, 9.262, 52.93, 1.285,
+  //     2.691, 0.4395, 28.24, 8;
+  for (int i = 0; i < 11; i++) {
+    default_prior_expectation(i) = user_specified.at(i);
+  }
 
   Eigen::VectorXd out_vec = Eigen::VectorXd(em.size() + 11);
   out_vec << default_prior_expectation, em;
