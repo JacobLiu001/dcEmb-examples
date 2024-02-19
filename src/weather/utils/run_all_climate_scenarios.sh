@@ -15,6 +15,7 @@ do
     mkdir -p data/climate/$scenario
     echo "Running scenario: $scenario"
     ./dcm_weather $scenario a.txt
+    python3 ./clean_and_jsonize_output.py $scenario
 done
 
-cp -r data/ ../../data/
+cp -r clean_data/ ../../data/
