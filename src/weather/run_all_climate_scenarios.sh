@@ -16,4 +16,5 @@ do
     echo "Running scenario: $scenario"
     ./dcm_weather $scenario a.txt
 done
-```
+
+cp -r data/ ../../data/
