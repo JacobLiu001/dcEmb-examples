@@ -18,4 +18,5 @@ do
     python3 ./clean_and_jsonize_output.py $scenario
 done
 
-cp -r clean_data/ ../../data/
+mkdir -p ../../src/project/webapi/data/
+cp -r clean_data/ ../../src/project/webapi/data/
