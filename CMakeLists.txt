@@ -124,6 +124,8 @@ set_target_properties(dcm_covid PROPERTIES COMPILE_FLAGS "")
 
 # 3Body model
 add_executable(dcm_3body ${SOURCES_3BODY})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/3body/utils/run_all_3body_scenarios.sh
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 if(OpenMP_FOUND)
     target_link_libraries(dcm_3body PUBLIC OpenMP::OpenMP_CXX)

@@ -15,10 +15,10 @@
 #include "parameter_location_3body.hh"
 #pragma once
 
-int run_3body_test();
+int run_3body_test(std::string x_string, double x);
 
 Eigen::VectorXd true_prior_expectations();
-Eigen::VectorXd default_prior_expectations();
+Eigen::VectorXd default_prior_expectations(double x);
 Eigen::MatrixXd default_prior_covariances();
 parameter_location_3body default_parameter_locations();
 Eigen::VectorXd default_hyper_expectations();

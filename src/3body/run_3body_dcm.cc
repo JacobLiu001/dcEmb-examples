@@ -19,7 +19,11 @@
 /**
  * Check number of threads Eigen is operating on, then run 3body test
  */
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " <noise>\n";
+    return 1;
+  }
 #if defined(_OPENMP)
   std::cout << "OpenMP multithreading enabled with " << Eigen::nbThreads()
             << " cores" << '\n';
@@ -27,7 +31,6 @@ int main() {
   std::cout << "OpenMP multithreading not enabled, using " << Eigen::nbThreads()
             << " cores" << '\n';
 #endif
-  int test = run_3body_test();
-  exit(2);
+  int test = run_3body_test(argv[1], atof(argv[1]));
   return (0);
 }
