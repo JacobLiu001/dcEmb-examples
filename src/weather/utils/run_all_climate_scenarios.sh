@@ -19,4 +19,4 @@ do
 done
 
 mkdir -p ../../src/project/webapi/data/climate
-cp -r clean_data/climate ../../src/project/webapi/data/climate
+cp -r clean_data/climate ../../src/project/webapi/data

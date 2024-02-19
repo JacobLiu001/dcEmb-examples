@@ -13,4 +13,4 @@ done
 cp -r data/3body clean_data/
 
 mkdir -p ../../src/project/webapi/data/3body
-cp -r clean_data/3body ../../src/project/webapi/data/3body
+cp -r clean_data/3body ../../src/project/webapi/data
