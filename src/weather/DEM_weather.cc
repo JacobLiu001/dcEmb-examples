@@ -46,9 +46,10 @@ int run_weather_test(
   // We'll use these to make graphs later.
   model.intermediate_outputs_to_file = 1;
   model.intermediate_expectations_filename =
-      "large_data/climate/" + scenario + "/param_expectations.csv";
+      "large_data/climate_no_co2/" + scenario + "/param_expectations.csv";
   model.intermediate_covariances_filename =
-      "large_data/climate/" + scenario + "/param_covariances.csv";
+      "large_data/climate_no_co2/" + scenario + "/param_covariances.csv";
+
 
   // Define which species of gasses will drive our model, and populate the
   // properties of these gasses with default values from a config file.
@@ -151,11 +152,11 @@ int run_weather_test(
   // Open files recording intermediate parameter expectaions and covariances
   // from each iteration of the DCM model inversion
   std::ifstream param_expectations_file;
-  param_expectations_file.open("large_data/climate/" + scenario +
+  param_expectations_file.open("large_data/climate_no_co2/" + scenario +
                                "/param_expectations.csv");
   std::string param_expectations_line;
   std::ifstream param_covariances_file;
-  param_covariances_file.open("large_data/climate/" + scenario +
+  param_covariances_file.open("large_data/climate_no_co2/" + scenario +
                               "/param_covariances.csv");
   std::string param_covariances_line;
 
@@ -213,16 +214,15 @@ int run_weather_test(
   param_covariances_file.close();
 
   // Output recorded values to folder containing visualization python scripts
-  utility::print_matrix("large_data/climate/" + scenario + "/true_generative.csv",
+  utility::print_matrix("large_data/climate_no_co2/" + scenario + "/true_generative.csv",
                         true_out);
-  utility::print_matrix("large_data/climate/" + scenario + "/prior_generative.csv",
+  utility::print_matrix("large_data/climate_no_co2/" + scenario + "/prior_generative.csv",
                         prior_e_out);
-  utility::print_matrix("large_data/climate/" + scenario + "/prior_generative_rand.csv",
+  utility::print_matrix("large_data/climate_no_co2/" + scenario + "/prior_generative_rand.csv",
                         prior_rand_out);
-  utility::print_matrix("large_data/climate/" + scenario + "/pos_generative.csv",
+  utility::print_matrix("large_data/climate_no_co2/" + scenario + "/pos_generative.csv",
                         posterior_e_out);
-  utility::print_matrix("large_data/climate/" + scenario + "/pos_generative_rand.csv",
-                        posterior_rand_out);
+  utility::print_matrix("large_data/climate_no_co2/" + scenario + "/pos_generative_rand.csv",
   return 0;
 }
 

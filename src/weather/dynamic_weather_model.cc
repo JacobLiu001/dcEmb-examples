@@ -115,9 +115,9 @@ Eigen::MatrixXd dynamic_weather_model::eval_generative(
 
   // CO2 Emissions are the sum of ffi and afolu emissions.
   // TODO: This should probably be an optional setting
-  emissions_array(species_list.co2_indices, Eigen::all) =
-      emissions_array(species_list.co2_afolu_indices, Eigen::all) +
-      emissions_array(species_list.co2_ffi_indices, Eigen::all);
+//   emissions_array(species_list.co2_indices, Eigen::all) =
+//       emissions_array(species_list.co2_afolu_indices, Eigen::all) +
+//       emissions_array(species_list.co2_ffi_indices, Eigen::all);
 
   // Calculate cumulative emissions
   for (int i = 1; i < timeseries_length; i++) {
