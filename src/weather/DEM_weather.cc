@@ -223,6 +223,7 @@ int run_weather_test(
   utility::print_matrix("large_data/climate_no_co2/" + scenario + "/pos_generative.csv",
                         posterior_e_out);
   utility::print_matrix("large_data/climate_no_co2/" + scenario + "/pos_generative_rand.csv",
+                        posterior_rand_out);
   return 0;
 }
 
