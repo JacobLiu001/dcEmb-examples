@@ -142,6 +142,18 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_scenario
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/clean_and_jsonize_output.py
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_no_co2.sh
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/clean_and_jsonize_output_no_co2.py
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_scenarios_large_no_co2.sh
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/clean_and_jsonize_output_large_no_co2.py
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
 if(OpenMP_FOUND)
     target_link_libraries(dcm_weather PUBLIC OpenMP::OpenMP_CXX)
 endif(OpenMP_FOUND)
