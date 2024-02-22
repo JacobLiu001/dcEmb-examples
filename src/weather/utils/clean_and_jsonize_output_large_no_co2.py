@@ -79,7 +79,7 @@ def main(scenario):
 
     # DCM input data
     START_YEAR, END_YEAR = 1750, 2100
-    N = 10  # No. samples
+    N = 1000  # No. samples
     SPECIES = ["CO2_FFI", "CO2_AFOLU", "CO2", "CH4", "N2O"]  # species list
 
     # Construct column names
