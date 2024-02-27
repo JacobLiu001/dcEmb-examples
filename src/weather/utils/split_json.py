@@ -38,15 +38,17 @@ def species(input_dir: Path, output_dir: Path):
         data[key] = data[key][:(RUNS_TO_USE * len(YEARS))]
     for specie in SPECIES:
         output_dir.mkdir(parents=True, exist_ok=True)
-        output_file = output_dir / "species" / f"{specie}.json"
+        output_file = output_dir / f"{specie}.json"
         sub_data = {f"{specie}_{metric}": data[f"{specie}_{metric}"] for metric in METRICS}
+        sub_data["run"] = data["run"]
+        sub_data["year"] = data["year"]
         output_file.parent.mkdir(parents=True, exist_ok=True)
         output_file.write_text(json.dumps(sub_data))
 
 
 def main(scenario: str):
     INPUT_DIR = Path("clean_large_data/climate_no_co2") / scenario / "clean" / "pos_generative_rand.json"
-    OUTPUT_DIR = Path("split_data/climate_no_co2") / scenario
+    OUTPUT_DIR = Path("split_data/climate") / scenario
     detailed(INPUT_DIR, OUTPUT_DIR / "year")
     species(INPUT_DIR, OUTPUT_DIR / "species")
 
