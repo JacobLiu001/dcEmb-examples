@@ -16,6 +16,7 @@ do
     echo "Running scenario: $scenario"
     ./dcm_weather $scenario a.txt
     python3 ./clean_and_jsonize_output_large_no_co2.py $scenario
+    python3 ./split_json.py $scenario
     zip -r /mnt/d/weather_no_co2_all.zip clean_large_data/climate_no_co2/$scenario
     # rm -r clean_large_data/climate_no_co2/$scenario large_data/climate_no_co2/$scenario
 done
