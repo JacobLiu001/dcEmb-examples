@@ -45,12 +45,28 @@ def species(input_dir: Path, output_dir: Path):
         output_file.parent.mkdir(parents=True, exist_ok=True)
         output_file.write_text(json.dumps(sub_data))
 
+def temperatures(input_dir: Path, output_dir: Path):
+    data = json.loads(input_dir.read_text())
+    RUNS_TO_USE = 200
+    for key in data:
+        data[key] = data[key][:(RUNS_TO_USE * len(YEARS))]
 
-def main(scenario: str):
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_file = output_dir / f"temps.json"
+    sub_data = {key: data[key] for key in data if key.endswith("temp")}
+    sub_data["run"] = data["run"]
+    sub_data["year"] = data["year"]
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    output_file.write_text(json.dumps(sub_data))
+
+
+def main(scenario: str, no_details: bool = False):
     INPUT_DIR = Path("clean_large_data/climate_no_co2") / scenario / "clean" / "pos_generative_rand.json"
     OUTPUT_DIR = Path("split_data/climate") / scenario
-    detailed(INPUT_DIR, OUTPUT_DIR / "year")
+    if not no_details:
+        detailed(INPUT_DIR, OUTPUT_DIR / "year")
     species(INPUT_DIR, OUTPUT_DIR / "species")
+    temperatures(INPUT_DIR, OUTPUT_DIR / "temps")
 
 if __name__ == "__main__":
     parser = ArgumentParser(
@@ -62,9 +78,19 @@ if __name__ == "__main__":
         type=str,
         help="The scenario to clean"
     )
+    
+    # yearly details is huge so we probably don't want to generate it every time
+    parser.add_argument( 
+        "--skip-yearly-details",
+        dest="no_details",
+        action="store_true",
+        help="Skip splitting the yearly details"
+    )
     args = parser.parse_args()
-    if args.scenario == "all":
-        for scenario in SCENARIOS:
-            main(scenario)
+    scenario = args.scenario
+    no_details = args.no_details
+    if scenario == "all":
+        for sc in SCENARIOS:
+            main(sc, no_details)
     else:
-        main(args.scenario)
+        main(scenario, no_details)
