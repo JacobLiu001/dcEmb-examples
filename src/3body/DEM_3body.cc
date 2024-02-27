@@ -32,7 +32,7 @@ int run_3body_test(std::string x_string, double x) {
   model.prior_hyper_expectations = default_hyper_expectations();
   model.prior_hyper_covariances = default_hyper_covariances();
   model.parameter_locations = default_parameter_locations();
-  model.num_samples = 2000;
+  model.num_samples = 1000;
   model.num_response_vars = 3;
 
   Eigen::MatrixXd out1 =

@@ -18,4 +18,4 @@ do
 done
 
 mkdir -p ../../src/project/webapi/data/3body
-cp -r clean_data/3body ../../src/project/webapi/data
+# cp -r clean_data/3body ../../src/project/webapi/data
