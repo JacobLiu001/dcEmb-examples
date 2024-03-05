@@ -22,10 +22,8 @@ def read_csv(file_name, dir, column_names, start_year, end_year):
     return df
 
 
-# Write dataframe to both csv and json output
+# Write dataframe to json output
 def save(df, file_name, output_dir):
-    output_csv_path = output_dir / "csv" / file_name
-    df.to_csv(output_csv_path, index=False)
     output_json_path = (output_dir / file_name).with_suffix(".json")
     with open(output_json_path, "w") as file:
         json.dump({col: df[col].tolist() for col in df.columns}, file)

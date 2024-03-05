@@ -17,5 +17,5 @@ do
     python3 ./jsonize_3body.py $x
 done
 
-mkdir -p ../../src/project/webapi/data/3body
-# cp -r clean_data/3body ../../src/project/webapi/data
+mkdir -p ../../src/project/webapi/static/large_data
+cp -r clean_data/3body ../../src/project/webapi/static/large_data/
