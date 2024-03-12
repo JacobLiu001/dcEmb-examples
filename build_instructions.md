@@ -47,12 +47,14 @@ We are going to continue to not install the library. Instead, we explicitly tell
 ### Build instructions
 1. Clone the dcEmb-examples repo.
 2. Symlink the built library to somewhere convenient (call it `/path/to/library/`)
-    You can do this via
-    `ln -sf /path/to/built/library/libdcEmb.so /path/to/library/lib/`
-    `ln -sf /path/to/dcEmb/include/bma_model.hh /path/to/library/include/`
-    `ln -sf /path/to/dcEmb/include/bmr_model.hh /path/to/library/include/`
-    `ln -sf /path/to/dcEmb/include/dynamic_model.hh /path/to/library/include/`
-    `ln -sf /path/to/dcEmb/include/peb_model.hh /path/to/library/include/`
+   You can do this via
+   ```bash
+   ln -s /path/to/built/library/libdcEmb.so /path/to/library/lib/
+   ln -s /path/to/dcEmb/include/bma_model.hh /path/to/library/include/
+   ln -s /path/to/dcEmb/include/bmr_model.hh /path/to/library/include/
+   ln -s /path/to/dcEmb/include/dynamic_model.hh /path/to/library/include/
+   ln -s /path/to/dcEmb/include/peb_model.hh /path/to/library/include/
+   ```
 3. Tell CMake to use these directories when building:
    Edit CMakeLists.txt line 29: comment out the line `find_package(dcEmb)`. Instead replace it with `SET(dcEmb_LIB_PATH "$/path/to/library")`.
    Add a line within the include_directories (lines 31-38) to include `${dcEmb_LIB_PATH}/include`
