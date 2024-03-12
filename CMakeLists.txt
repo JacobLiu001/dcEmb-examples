@@ -138,18 +138,6 @@ set_target_properties(dcm_3body PROPERTIES COMPILE_FLAGS "")
 
 # Weather model
 add_executable(dcm_weather ${SOURCES_WEATHER})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_scenarios.sh
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/clean_and_jsonize_output.py
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_no_co2.sh
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/clean_and_jsonize_output_no_co2.py
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/weather/utils/run_all_climate_scenarios_large_no_co2.sh
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
